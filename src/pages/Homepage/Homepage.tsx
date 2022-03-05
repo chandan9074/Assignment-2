@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { fetchCountryData, fetchCountryWeatherData } from '../../services/services';
 
 
-const Homepage = () =>{
+const Homepage :React.FunctionComponent = () =>{
     // const {state} = useLocation();
     // console.log(state.data)
     const [inputvalue, setInputvalue] = useState<string>("")

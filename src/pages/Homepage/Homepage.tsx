@@ -3,17 +3,16 @@ import { fetchCountryData, fetchCountryWeatherData } from '../../services/servic
 
 
 const Homepage :React.FunctionComponent = () =>{
-    // const {state} = useLocation();
-    // console.log(state.data)
     const [inputvalue, setInputvalue] = useState<string>("")
     const [country, setCountry] = useState<any>([])
     const [weather, setWeather] = useState<any>([])
-    const handleInput = (e:any) =>{
+
+    const handleInput : React.ChangeEventHandler<HTMLInputElement> = (e) =>{
         setInputvalue(e.target.value);
         // console.log(inputvalue);
     }
 
-    const handleSubmit = async (e:any) =>{
+    const handleSubmit  = async (e : React.FormEvent) =>{
         e.preventDefault();
         
         const response = await fetchCountryData(inputvalue);
@@ -22,7 +21,7 @@ const Homepage :React.FunctionComponent = () =>{
         // console.log(response)
     }
 
-    const handleWeaher = async () =>{
+    const handleWeaher : React.MouseEventHandler<HTMLButtonElement> = async () =>{
         const response = await fetchCountryWeatherData(country[0].capital)
         setWeather(response);
     }

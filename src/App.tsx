@@ -7,6 +7,7 @@ import {
   Route,
 } from "react-router-dom";
 import Homepage from './pages/Homepage/Homepage';
+import CountryWeather from './pages/CountryWeather/CountryWeather';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Homepage />}></Route>
+          <Route path="/:str" element={<CountryWeather />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

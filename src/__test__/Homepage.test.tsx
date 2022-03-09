@@ -1,5 +1,8 @@
-import Homepage from "../pages/Homepage/Homepage";
 import * as ReactDom from "react-dom";
+import {
+    BrowserRouter
+} from "react-router-dom";
+import Homepage from "../pages/Homepage/Homepage";
 
 describe("Testing input fields", ()=>{
     let container : HTMLDivElement
@@ -7,7 +10,7 @@ describe("Testing input fields", ()=>{
     beforeEach(()=>{
         container = document.createElement("div");
         document.body.appendChild(container);
-        ReactDom.render(<Homepage />, container);
+        ReactDom.render(<BrowserRouter><Homepage /></BrowserRouter>, container);
     })
 
     afterEach(()=>{
@@ -16,9 +19,14 @@ describe("Testing input fields", ()=>{
     })
 
     it("Render correctly homepage document", ()=>{
-        expect(container.querySelector("[data-test='input-form']")).toBeInTheDocument;
-        expect(container.querySelector("[data-test='countryLabel']")).toBeInTheDocument;
-        expect(container.querySelector("[data-test='country-input']")?.getAttribute("name")).toBe("country");
-        expect(container.querySelector("[data-test='submit-button']")?.getAttribute("value")).toBe("Submit");
+        
+        expect(container.querySelector("[data-testid='countryLabel']")).toBeInTheDocument;
+        expect(container.querySelector("[data-testid='country-input']")?.getAttribute("name")).toBe("country");
+        expect(container.querySelector("[data-testid='submit-button']")).toBeInTheDocument;
+        expect(container.querySelector("[data-testid='submit-button-disable']")).toBeInTheDocument;
+    })
+
+    it("Check button disable without input value", ()=>{
+        expect(container.querySelector("[data-testid='submit-button']")).toBeDisabled;
     })
 })

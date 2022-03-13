@@ -1,5 +1,5 @@
+import { cleanup } from '@testing-library/react';
 import * as services from '../services/services';
-import {cleanup, fireEvent, render} from '@testing-library/react';
 
 beforeEach(cleanup);
 
@@ -18,7 +18,6 @@ it("Test error for Country data", ()=>{
     }),
   );
 })
-
 
 it("Test error for Weather data", ()=>{
     return services.fetchCountryWeatherData("2").catch(e =>

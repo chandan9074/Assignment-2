@@ -59,26 +59,24 @@ const CountryWeather = () =>{
 
     return (
         <>
-            <div data-testid="country-body" className='border-2 border-gray-200 w-1/4 p-5 mt-10 rounded-md shodow-md mx-auto'>
-                {loading ? <div className='flex justify-center mt-10 mb-10'>
-                    <CircularProgress />
-                </div> :
-                    country ? <div>
-                    <img src={country.flags.svg} alt="" className='w-full h-48' />
-                    <h4 className='text-xl font-semibold'>Capital City : {country.capital[0]}</h4>
-                    <h4 className='text-lg font-semibold'>Population : {country.population}</h4>
-                    <h4 className='text-lg font-semibold'>Latlng: 
-                        {country.latlng.map((lat:number)=>(
-                            <span> {lat} </span>
-                        ))}
-                    </h4>
-                    
-                </div>
-                 : null}
-                
+            {loading ? <div className='flex justify-center mt-10 mb-10'>
+                <CircularProgress />
+            </div> :
+                country ? <div data-testid="country-body" className='border-2 border-gray-200 w-1/4 p-5 mt-10 rounded-md shodow-md mx-auto'>
+                <img src={country.flags.svg} alt="" className='w-full h-48' />
+                <h4 className='text-xl font-semibold'>Capital City : {country.capital[0]}</h4>
+                <h4 className='text-lg font-semibold'>Population : {country.population}</h4>
+                <h4 className='text-lg font-semibold'>Latlng: 
+                    {country.latlng.map((lat:number)=>(
+                        <span> {lat} </span>
+                    ))}
+                </h4>
                 <br />
                 <button onClick={handleWeaher} className='bg-red-100 py-1 px-3 rounded-md border-2 border-red-500 cursor-pointer'>Capital Weather</button>
+                
             </div>
+                : null}
+                
             {weather ?
             <div className='border-2 border-gray-200 w-1/4 p-5 mt-10 mb-10 rounded-md shodow-md mx-auto'>
                 <br />

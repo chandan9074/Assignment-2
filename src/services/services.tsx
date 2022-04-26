@@ -1,4 +1,3 @@
-import * as React from 'react';
 
 export const fetchCountryData = (countryName : string) =>{
     return fetch(`https://restcountries.com/v3.1/name/${countryName}`)

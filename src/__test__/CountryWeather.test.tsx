@@ -11,18 +11,12 @@ it("Render Weather data perfectly", ()=>{
     return services.fetchCountryWeatherData("Dhaka").then(data => expect.objectContaining(data));
 })
 
-it("Test error for Country data", ()=>{
-    return services.fetchCountryData("2").catch(e =>
-    expect(e).toEqual({
-      message: 'Not Found',
-    }),
-  );
+it("Test error for Country data", async()=>{
+    const error = await services.fetchCountryData("2")
+    expect(error).toHaveProperty("status",404);
 })
 
-it("Test error for Weather data", ()=>{
-    return services.fetchCountryWeatherData("2").catch(e =>
-    expect(e).toEqual({
-      error: 'Not Found',
-    }),
-  );
+it("Test error for Weather datas", async()=>{
+    const error = await services.fetchCountryWeatherData("2");
+    expect(error).toHaveProperty("success",false);
 })

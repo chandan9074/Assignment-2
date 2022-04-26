@@ -1,20 +1,18 @@
-import * as React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { fetchCountryData, fetchCountryWeatherData } from '../../services/services';
 import CircularProgress from '@mui/material/CircularProgress';
+import * as React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { fetchCountryWeatherData } from '../../services/services';
 
 const CountryWeather = () =>{
 
-    type ParamsDT = {
-        str: string 
-    }
-
     type CountryDT = {
-        capital: string[],
-        population: number,
-        latlng: number[],
-        flags: {
-            svg: string
+        countryData: {
+            capital: string[],
+            population: number,
+            latlng: number[],
+            flags: {
+                svg: string
+            }
         }
     }
 
@@ -25,32 +23,18 @@ const CountryWeather = () =>{
         precip: number
     }
 
-    const {str} = useParams<ParamsDT>();
-    const [country, setCountry] = React.useState<CountryDT>()
     const [weather, setWeather] = React.useState<WeatherDT>()
-    const [loading, setLoading] = React.useState<boolean>(false)
     const [weatherload, setWeatherload] = React.useState<boolean>(false)
-    React.useEffect(()=>{
-        fetchCountry();
-    }, [])
-
-    const fetchCountry = async () => {
-        setLoading(true);
-
-        if(str){
-            const data = await fetchCountryData(str)
-            setCountry(data.length > 1 ? data[2] : data[0]);
-        }
-
-        setLoading(false);
-    }
+    const location = useLocation();
+    const state = location.state as CountryDT;
+    const { countryData } = state;
 
     
-    const handleWeaher : React.MouseEventHandler<HTMLButtonElement> = async () =>{
+    const handleWeather : React.MouseEventHandler<HTMLButtonElement> = async () =>{
         setWeatherload(true);
 
-        if(country){
-            const data = await fetchCountryWeatherData(country.capital[0])
+        if(countryData){
+            const data = await fetchCountryWeatherData(countryData.capital[0])
             setWeather(data.current);
         }
 
@@ -59,23 +43,19 @@ const CountryWeather = () =>{
 
     return (
         <>
-            {loading ? <div className='flex justify-center mt-10 mb-10'>
-                <CircularProgress />
-            </div> :
-                country ? <div data-testid="country-body" className='border-2 border-gray-200 w-1/4 p-5 mt-10 rounded-md shodow-md mx-auto'>
-                <img src={country.flags.svg} alt="" className='w-full h-48' />
-                <h4 className='text-xl font-semibold'>Capital City : {country.capital[0]}</h4>
-                <h4 className='text-lg font-semibold'>Population : {country.population}</h4>
+            {countryData ? 
+            <div data-testid="country-body" className='border-2 border-gray-200 w-1/4 p-5 mt-10 rounded-md shodow-md mx-auto'>
+                <img src={countryData.flags.svg} alt="" className='w-full h-48' />
+                <h4 className='text-xl font-semibold'>Capital City : {countryData.capital[0]}</h4>
+                <h4 className='text-lg font-semibold'>Population : {countryData.population}</h4>
                 <h4 className='text-lg font-semibold'>Latlng: 
-                    {country.latlng.map((lat:number)=>(
-                        <span> {lat} </span>
+                    {countryData.latlng.map((lat:number)=>(
+                        <span key={lat}> {lat} </span>
                     ))}
                 </h4>
                 <br />
-                <button onClick={handleWeaher} className='bg-red-100 py-1 px-3 rounded-md border-2 border-red-500 cursor-pointer'>Capital Weather</button>
-                
-            </div>
-                : null}
+                <button onClick={handleWeather} className='bg-red-100 py-1 px-3 rounded-md border-2 border-red-500 cursor-pointer'>Capital Weather</button>
+            </div>: null}
                 
             {weather ?
             <div className='border-2 border-gray-200 w-1/4 p-5 mt-10 mb-10 rounded-md shodow-md mx-auto'>

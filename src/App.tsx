@@ -1,13 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import {
-  BrowserRouter,
-  Routes,
-  Route,
+  BrowserRouter, Route, Routes
 } from "react-router-dom";
-import Homepage from './pages/Homepage/Homepage';
+import './App.css';
 import CountryWeather from './pages/CountryWeather/CountryWeather';
+import Homepage from './pages/Homepage/Homepage';
+import NotFound from './pages/Homepage/NotFound';
 
 function App() {
   return (
@@ -15,6 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Homepage />}></Route>
+          <Route path="/Not-Found" element={<NotFound />}></Route>
           <Route path="/:str" element={<CountryWeather />}></Route>
         </Routes>
       </BrowserRouter>
